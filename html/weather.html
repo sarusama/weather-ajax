@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>天气</title>
+	<link rel="stylesheet" href="../css/weather.css" />
+	<script>
+		function loadXMLDoc(url)
+{
+var xmlhttp;
+var txt,city,temp,time,ooo;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    txt="<p><span>城市:</span>";
+    city = xmlhttp.responseXML.documentElement.getElementsByTagName("city").firstChild.nodeValue;
+    time = xmlhttp.responseXML.documentElement.getElementsByTagName("updatetime").firstChild.nodeValue;
+    temp = xmlhttp.responseXML.documentElement.getElementsByTagName("wendu").firstChild.nodeValue;
+    ooo = xmlhttp.responseXML.documentElement.getElementsByTagName("o3").firstChild.nodeValue;
+    console.log(city);
+    console.log(time);
+    console.log(temp);
+    console.log(ooo);
+    
+    txt = city + "</p><p><span>更新时间：</span>" + time + "</p><p><span>温度：</span>" + temp + "</p><p><span>空气指数：</span>" + ooo + "</p>";
+
+    document.getElementById("weather").innerHTML=txt;
+    }
+  }
+xmlhttp.open("GET",url,true);
+xmlhttp.send();
+}
+	</script>
+</head>
+<body>
+	<div id = "weather"></div>
+	<input type = "button" value = "check" onclick = "loadXMLDoc('http://wthrcdn.etouch.cn/WeatherApi?citykey=101020100')" />
+</body>
+</html>
